@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HALPHAS — iPhone</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #f2f2f7;
+  --blue: #007aff;
+  --text: #19191d;
+  --muted: #8e8e93;
+}
+
+body {
+  margin: 0;
+  padding: 25px 12px;
+  background: #e8e8ed;
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.page {
+  max-width: 900px;
+  margin: auto;
+}
+
+.intro {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.intro h1 {
+  font-size: 25px;
+  letter-spacing: -1px;
+}
+
+.intro p {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #666;
+}
+
+.phone {
+  width: 100%;
+  max-width: 340px;
+  margin: auto;
+  padding: 9px;
+  background: #202024;
+  border: 2px solid #555;
+  border-radius: 45px;
+  box-shadow: 0 20px 55px #0002;
+}
+
+.screen {
+  height: 680px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 35px;
+  background: var(--bg);
+}
+
+.status {
+  height: 32px;
+  padding: 9px 22px 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: bold;
+  position: relative;
+  z-index: 5;
+}
+
+.island {
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 24px;
+  background: #000;
+  border-radius: 20px;
+  z-index: 6;
+}
+
+.view {
+  position: absolute;
+  inset: 32px 0 0;
+  overflow-y: auto;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* LOCK SCREEN */
+
+.lock {
+  min-height: 100%;
+  padding: 35px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: white;
+  background: linear-gradient(
+    155deg,
+    #9eafc1,
+    #d8d9e0 48%,
+    #a8b2c0
+  );
+}
+
+.lock-date {
+  margin-top: 25px;
+  font-size: 15px;
+}
+
+.lock-time {
+  margin-top: 4px;
+  font-size: 76px;
+  font-weight: 250;
+  letter-spacing: -4px;
+}
+
+.notification {
+  width: 100%;
+  margin-top: 25px;
+  padding: 14px;
+  border-radius: 17px;
+  text-align: left;
+  color: #25252a;
+  background: #ffffffc9;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.notification strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.lock-space {
+  flex: 1;
+  min-height: 70px;
+}
+
+.unlock {
+  border: 0;
+  border-radius: 22px;
+  padding: 12px 22px;
+  background: #ffffffdd;
+  color: #222;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* HOME */
+
+.home {
+  min-height: 100%;
+  padding: 20px 15px;
+  background: linear-gradient(150deg, #e4e5ed, #f7f7fa, #d9dce5);
+}
+
+.widget {
+  padding: 16px;
+  margin-bottom: 22px;
+  border-radius: 22px;
+  background: #ffffffb8;
+}
+
+.widget-label {
+  font-size: 11px;
+  color: #666;
+}
+
+.widget-time {
+  margin: 5px 0;
+  font-size: 34px;
+  font-weight: 600;
+}
+
+.widget-sub {
+  font-size: 11px;
+  color: #777;
+}
+
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 23px 5px;
+}
+
+.app {
+  min-width: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  border: 0;
+  background: transparent;
+  color: #222;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.icon {
+  width: 49px;
+  height: 49px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: white;
+  box-shadow: 0 2px 5px #0001;
+  font-size: 25px;
+}
+
+.app-label {
+  white-space: nowrap;
+}
+
+.dock {
+  margin-top: 30px;
+  padding: 12px 5px;
+  display: flex;
+  justify-content: space-around;
+  border-radius: 24px;
+  background: #ffffffa8;
+}
+
+.dock .icon {
+  width: 46px;
+  height: 46px;
+}
+
+/* APP SCREENS */
+
+.app-screen {
+  min-height: 100%;
+  padding-bottom: 30px;
+  background: var(--bg);
+}
+
+.nav {
+  height: 48px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav button {
+  border: 0;
+  background: transparent;
+  color: var(--blue);
+  font-size: 27px;
+  cursor: pointer;
+}
+
+.nav-title {
+  font-size: 12px;
+  color: #666;
+}
+
+.app-heading {
+  padding: 10px 17px 18px;
+}
+
+.app-heading h2 {
+  margin: 0 0 4px;
+  font-size: 30px;
+  letter-spacing: -1px;
+}
+
+.app-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.content {
+  padding: 0 14px;
+}
+
+.card {
+  margin-bottom: 10px;
+  padding: 14px;
+  border-radius: 15px;
+  background: white;
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.small {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.person {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #eeeef3;
+  font-size: 20px;
+}
+
+.bubble {
+  max-width: 85%;
+  margin: 9px 0;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: white;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.bubble.out {
+  margin-left: auto;
+  background: #a1dc86;
+}
+
+.action {
+  margin-top: 10px;
+  padding: 10px 13px;
+  border: 0;
+  border-radius: 12px;
+  color: white;
+  background: var(--blue);
+  cursor: pointer;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+}
+
+.photo {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 7px;
+  background: linear-gradient(135deg, #c9d0dc, #eee5e8);
+  font-size: 32px;
+}
+
+.note {
+  margin-bottom: 10px;
+  padding: 14px;
+  border-radius: 12px;
+  background: #fff4c4;
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.note strong {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.field {
+  width: 100%;
+  margin: 5px 0;
+  padding: 11px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: white;
+  font: inherit;
+  font-size: 13px;
+}
+
+.home-indicator {
+  position: absolute;
+  z-index: 10;
+  bottom: 7px;
+  left: 50%;
+  width: 100px;
+  height: 4px;
+  transform: translateX(-50%);
+  border-radius: 10px;
+  background: #222;
+}
+
+@media (max-width: 400px) {
+  body {
+    padding: 12px 8px;
+  }
+
+  .screen {
+    height: 650px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+  <div class="intro">
+    <h1>HALPHAS'S iPHONE</h1>
+    <p>
+      잠금이 풀린 할파스의 휴대폰.<br>
+      앱을 눌러 그의 사적인 기록을 확인해 보세요.
+    </p>
+    <p>SHUMETTERING · CHEMISTRY DEPARTMENT</p>
+  </div>
+
+  <div class="phone">
+    <div class="screen">
+
+      <div class="status">
+        <span>SKT ▴</span>
+        <span>▮▮ Wi-Fi ▰</span>
+      </div>
+
+      <div class="island"></div>
+
+      <!-- LOCK SCREEN -->
+      <div class="view" id="lockView">
+        <div class="lock">
+          <div class="lock-date">10월 24일 토요일</div>
+          <div class="lock-time" id="lockTime">18:26</div>
+
+          <div class="notification">
+            <strong>화학부서 · 지금</strong>
+            오늘 연구 일정 확인 바랍니다.
+            <div class="small">새로운 알림</div>
+          </div>
+
+          <div class="lock-space"></div>
+
+          <button class="unlock" id="unlockBtn">
+            위로 밀어 잠금 해제 ↑
+          </button>
+        </div>
+      </div>
+
+      <!-- HOME SCREEN -->
+      <div class="view hidden" id="homeView">
+        <div class="home">
+
+          <div class="widget">
+            <div class="widget-label">토요일 · 10월 24일</div>
+            <div class="widget-time" id="homeTime">18:26</div>
+            <div class="widget-sub">
+              슈메터링 · 화학부서 책임자
+            </div>
+          </div>
+
+          <div class="app-grid">
+
+            <button class="app" data-app="messages">
+              <span class="icon">💬</span>
+              <span class="app-label">메시지</span>
+            </button>
+
+            <button class="app" data-app="photos">
+              <span class="icon">🌈</span>
+              <span class="app-label">사진</span>
+            </button>
+
+            <button class="app" data-app="notes">
+              <span class="icon">📝</span>
+              <span class="app-label">메모</span>
+            </button>
+
+            <button class="app" data-app="calls">
+              <span class="icon">📞</span>
+              <span class="app-label">전화</span>
+            </button>
+
+            <button class="app" data-app="contacts">
+              <span class="icon">👤</span>
+              <span class="app-label">연락처</span>
+            </button>
+
+            <button class="app" data-app="calendar">
+              <span class="icon">📅</span>
+              <span class="app-label">캘린더</span>
+            </button>
+
+            <button class="app" data-app="music">
+              <span class="icon">🎵</span>
+              <span class="app-label">음악</span>
+            </button>
+
+            <button class="app" data-app="research">
+              <span class="icon">🧪</span>
+              <span class="app-label">연구 기록</span>
+            </button>
+
+            <button class="app" data-app="mail">
+              <span class="icon">✉️</span>
+              <span class="app-label">메일</span>
+            </button>
+
+            <button class="app" data-app="settings">
+              <span class="icon">⚙️</span>
+              <span class="app-label">설정</span>
+            </button>
+
+            <button class="app" data-app="secret">
+              <span class="icon">🔒</span>
+              <span class="app-label">비밀 메모</span>
+            </button>
+
+            <button class="app" data-app="browser">
+              <span class="icon">🧭</span>
+              <span class="app-label">Safari</span>
+            </button>
+
+          </div>
+
+          <div class="dock">
+            <button class="app" data-app="calls">
+              <span class="icon">📞</span>
+            </button>
+            <button class="app" data-app="messages">
+              <span class="icon">💬</span>
+            </button>
+            <button class="app" data-app="browser">
+              <span class="icon">🧭</span>
+            </button>
+            <button class="app" data-app="music">
+              <span class="icon">🎵</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- APP SCREEN -->
+      <div class="view hidden" id="appView">
+        <div class="app-screen">
+
+          <div class="nav">
+            <button id="backBtn" aria-label="뒤로">‹</button>
+            <span class="nav-title" id="navTitle">iPhone</span>
+            <button id="homeBtn" aria-label="홈">⌂</button>
+          </div>
+
+          <div class="app-heading">
+            <h2 id="appTitle">메모</h2>
+            <p id="appSubtitle"></p>
+          </div>
+
+          <div class="content" id="appContent"></div>
+
+        </div>
+      </div>
+
+      <div class="home-indicator"></div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const lockView = $("lockView");
+const homeView = $("homeView");
+const appView = $("appView");
+const appContent = $("appContent");
+
+function showHome() {
+  lockView.classList.add("hidden");
+  appView.classList.add("hidden");
+  homeView.classList.remove("hidden");
+}
+
+$("unlockBtn").addEventListener("click", showHome);
+$("backBtn").addEventListener("click", showHome);
+$("homeBtn").addEventListener("click", showHome);
+
+const apps = {
+
+  messages: {
+    title: "메시지",
+    subtitle: "최근 대화",
+    html: `
+      <div class="card">
+        <div class="person">
+          <div class="avatar">🧪</div>
+          <div>
+            <b>아우구스투스</b>
+            <div class="small">슈메터링 · 오늘</div>
+          </div>
+        </div>
+
+        <div class="bubble">오늘 연구 결과 확인했나?</div>
+        <div class="bubble out">확인했으면 끝난 거잖아. 더 할 말 있나?</div>
+        <div class="bubble">보고서는 올려 두게.</div>
+        <div class="bubble out">귀찮게 굴지 마. 올릴 테니까.</div>
+      </div>
+
+      <div class="card">
+        <b>알 수 없는 번호</b>
+        <div class="small">읽지 않은 메시지 1개</div>
+        <div class="bubble">전화 좀 받아. 급한 일이야.</div>
+        <button class="action" onclick="showUnknownChat()">대화 열기</button>
+      </div>
+    `
+  },
+
+  photos: {
+    title: "사진",
+    subtitle: "최근 항목",
+    html: `
+      <div class="photo-grid">
+        <div class="photo">🧪</div>
+        <div class="photo">📄</div>
+        <div class="photo">☕</div>
+        <div class="photo">🌃</div>
+        <div class="photo">🐦‍⬛</div>
+        <div class="photo">🧬</div>
+        <div class="photo">🚬</div>
+        <div class="photo">🗝️</div>
+        <div class="photo">🕰️</div>
+        <div class="photo">🧫</div>
+        <div class="photo">📦</div>
+        <div class="photo">⬛</div>
+      </div>
+      <p class="small">실제 이미지 대신 이모지로 표현한 가상 사진첩입니다.</p>
+    `
+  },
+
+  notes: {
+    title: "메모",
+    subtitle: "최근 메모",
+    html: `
+      <div id="notesList">
+        <div class="note">
+          <strong>12월 25일</strong>
+          생일. 기억할 필요 없음.
+        </div>
+
+        <div class="note">
+          <strong>연구 일정</strong>
+          09:00 — 샘플 확인<br>
+          13:30 — 실험 결과 검토<br>
+          불필요한 회의는 취소할 것.
+        </div>
+
+        <div class="note">
+          <strong>기억할 것</strong>
+          왼쪽 주머니: 예비품<br>
+          오른쪽 서랍: 문서
+        </div>
+      </div>
+
+      <input class="field" id="noteTitle" placeholder="메모 제목">
+      <textarea class="field" id="noteBody" placeholder="메모 내용"></textarea>
+      <button class="action" onclick="addNote()">메모 저장</button>
+    `
+  },
+
+  calls: {
+    title: "최근 통화",
+    subtitle: "모든 통화",
+    html: `
+      <div class="card">
+        <b>슈메터링 내선</b>
+        <div class="small">오늘 16:42 · 발신 통화</div>
+      </div>
+
+      <div class="card">
+        <b>알 수 없는 번호</b>
+        <div class="small">오늘 15:08 · 부재중</div>
+      </div>
+
+      <div class="card">
+        <b>가족</b>
+        <div class="small">어제 20:17 · 부재중</div>
+      </div>
+    `
+  },
+
+  contacts: {
+    title: "연락처",
+    subtitle: "전체 연락처",
+    html: `
+      <div class="card">🧪　<b>아우구스투스</b><div class="small">슈메터링</div></div>
+      <div class="card">🏢　<b>슈메터링 내선</b><div class="small">업무</div></div>
+      <div class="card">👤　<b>가족</b><div class="small">개인</div></div>
+      <div class="card">？　<b>알 수 없는 번호</b><div class="small">저장되지 않음</div></div>
+    `
+  },
+
+  calendar: {
+    title: "캘린더",
+    subtitle: "10월 일정",
+    html: `
+      <div class="card">
+        <b>24일 · 오늘</b>
+        <div class="small">09:00 · 화학부서 실험 확인</div>
+        <div class="small">13:30 · 연구 결과 검토</div>
+        <div class="small">18:00 · 퇴근 예정 (미정)</div>
+      </div>
+
+      <div class="card">
+        <b>25일 · 일요일</b>
+        <div class="small">개인 일정 없음</div>
+      </div>
+
+      <div class="card">
+        <b>28일 · 수요일</b>
+        <div class="small">샘플 재검토 · 시간 미정</div>
+      </div>
+    `
+  },
+
+  music: {
+    title: "음악",
+    subtitle: "보관함",
+    html: `
+      <div class="card" style="text-align:center;padding:30px">
+        <div style="font-size:60px">🎵</div>
+        <b>최근 재생</b>
+        <div class="small">제목 없는 트랙</div>
+        <p>◀　▶　▶</p>
+      </div>
+
+      <div class="card">
+        <b>플레이리스트</b>
+        <div class="small">집중 · 17곡</div>
+      </div>
+
+      <div class="card">
+        <b>플레이리스트</b>
+        <div class="small">이름 없음 · 4곡</div>
+      </div>
+    `
+  },
+
+  research: {
+    title: "연구 기록",
+    subtitle: "화학부서 · 내부 기록",
+    html: `
+      <div class="card">
+        <div class="small">파일 0048 · 오늘 16:21</div>
+        <b>실험 결과 요약</b>
+        <p>수치 재검증 필요. 이전 기록과 차이가 발생함. 원인 확인 전까지 결론 보류.</p>
+      </div>
+
+      <div class="card">
+        <div class="small">파일 0047 · 어제 22:06</div>
+        <b>샘플 보관 목록</b>
+        <p>보관 위치와 날짜 대조 완료. 목록 외부 공유 금지.</p>
+      </div>
+
+      <div class="card">
+        <b>개인 메모</b>
+        <p>결과가 마음에 들지 않는다고 해서 결과가 바뀌지는 않는다.</p>
+      </div>
+    `
+  },
+
+  mail: {
+    title: "메일",
+    subtitle: "받은 편지함",
+    html: `
+      <div class="card">
+        <div class="small">오늘 17:32 · 슈메터링</div>
+        <b>주간 보고서 제출 요청</b>
+        <p>이번 주 연구 요약을 확인 후 제출해 주십시오.</p>
+      </div>
+
+      <div class="card">
+        <div class="small">오늘 11:09 · 시스템</div>
+        <b>비밀번호 변경 알림</b>
+        <p>계정 보안을 위해 정기 점검이 권장됩니다.</p>
+      </div>
+
+      <div class="card">
+        <div class="small">어제 09:15 · 발신자 미상</div>
+        <b>확인 요청</b>
+        <p>첨부 파일을 열기 전 발신자를 확인하십시오.</p>
+      </div>
+    `
+  },
+
+  secret: {
+    title: "비밀 메모",
+    subtitle: "잠긴 메모",
+    html: `
+      <div class="card" style="text-align:center;padding:25px">
+        <div style="font-size:45px">🔒</div>
+        <b>이 메모는 잠겨 있습니다.</b>
+        <p class="small">암호를 입력해 주세요.</p>
+
+        <input class="field" id="secretPassword" type="password" placeholder="암호 입력">
+
+        <button class="action" onclick="unlockSecret()">메모 보기</button>
+        <p class="small">힌트: 1225</p>
+      </div>
+
+      <div id="secretContent" class="hidden">
+        <div class="note">
+          <strong>개인 기록</strong>
+          귀찮은 것들은 기록해 두면 다시 설명할 필요가 없다.
+          <br><br>
+          쓸데없는 질문을 하는 사람은 차단할 것.
+          <br><br>
+          12월 25일 — 기억해 둘 날짜.
+        </div>
+      </div>
+    `
+  },
+
+  browser: {
+    title: "Safari",
+    subtitle: "즐겨찾기",
+    html: `
+      <div class="card">
+        <b>슈메터링 인트라넷</b>
+        <div class="small">내부 네트워크 · 즐겨찾기</div>
+      </div>
+
+      <div class="card">
+        <b>연구 자료 아카이브</b>
+        <div class="small">최근 방문</div>
+      </div>
+
+      <div class="card">
+        <b>검색 기록</b>
+        <div class="small">화학 반응 데이터 / 실험 기록 정리</div>
+      </div>
+    `
+  },
+
+  settings: {
+    title: "설정",
+    subtitle: "iPhone 설정",
+    html: `
+      <div class="card">
+        <div class="person">
+          <div class="avatar">👤</div>
+          <div>
+            <b>Halphas</b>
+            <div class="small">Apple 계정 · 개인 정보</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">✈️　에어플레인 모드 <span style="float:right">끔</span></div>
+      <div class="card">📶　Wi-Fi <span style="float:right">연결됨</span></div>
+      <div class="card">🔵　Bluetooth <span style="float:right">켬</span></div>
+      <div class="card">🔔　알림 <span style="float:right">켜짐</span></div>
+      <div class="card">🔐　암호 및 보안 <span style="float:right">설정됨</span></div>
+    `
+  }
+};
+
+function openApp(key) {
+  const app = apps[key];
+
+  if (!app) return;
+
+  lockView.classList.add("hidden");
+  homeView.classList.add("hidden");
+  appView.classList.remove("hidden");
+
+  $("navTitle").textContent = app.title;
+  $("appTitle").textContent = app.title;
+  $("appSubtitle").textContent = app.subtitle;
+  appContent.innerHTML = app.html;
+
+  appView.scrollTop = 0;
+}
+
+document.querySelectorAll("[data-app]").forEach(button => {
+  button.addEventListener("click", () => {
+    openApp(button.dataset.app);
+  });
+});
+
+function addNote() {
+  const titleInput = $("noteTitle");
+  const bodyInput = $("noteBody");
+  const list = $("notesList");
+
+  if (!titleInput || !bodyInput || !list) return;
+
+  const title = titleInput.value.trim() || "제목 없음";
+  const body = bodyInput.value.trim();
+
+  if (!body && !titleInput.value.trim()) return;
+
+  const note = document.createElement("div");
+  note.className = "note";
+
+  const heading = document.createElement("strong");
+  heading.textContent = title;
+
+  const content = document.createElement("div");
+  content.textContent = body;
+
+  note.appendChild(heading);
+  note.appendChild(content);
+  list.prepend(note);
+
+  titleInput.value = "";
+  bodyInput.value = "";
+}
+
+function unlockSecret() {
+  const input = $("secretPassword");
+  const content = $("secretContent");
+
+  if (!input || !content) return;
+
+  if (input.value === "1225") {
+    content.classList.remove("hidden");
+  } else {
+    input.value = "";
+    input.placeholder = "암호가 올바르지 않습니다";
+  }
+}
+
+function showUnknownChat() {
+  appContent.innerHTML = `
+    <div class="card">
+      <b>알 수 없는 번호</b>
+      <div class="small">오늘</div>
+      <div class="bubble">전화 좀 받아. 급한 일이야.</div>
+      <div class="bubble out">누구지.</div>
+      <div class="bubble">연구실에서 있었던 일, 얘기해야겠어.</div>
+      <div class="bubble out">용건만 말해.</div>
+
+      <input class="field" id="replyInput" placeholder="메시지 입력">
+      <button class="action" onclick="sendReply()">보내기 ↑</button>
+    </div>
+  `;
+}
+
+function sendReply() {
+  const input = $("replyInput");
+
+  if (!input || !input.value.trim()) return;
+
+  const bubble = document.createElement("div");
+  bubble.className = "bubble out";
+  bubble.textContent = input.value.trim();
+
+  input.parentElement.insertBefore(bubble, input);
+  input.value = "";
+}
+
+function updateClock() {
+  const now = new Date();
+  const time = now.toLocaleTimeString("ko-KR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false
+  });
+
+  $("lockTime").textContent = time;
+  $("homeTime").textContent = time;
+}
+
+updateClock();
+setInterval(updateClock, 30000);
+</script>
+
+</body>
+</html>
