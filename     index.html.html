@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HALPHAS — iPhone</title>
+<style>
+:root{--ink:#171719;--muted:#8b8b91;--paper:#f2f2f7;--white:#fff;--line:#e4e4e9;--blue:#087fff;--green:#34c759}
+*{box-sizing:border-box}
+body{margin:0;background:#e9e9ed;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh;padding:24px 12px 40px}
+.page{max-width:1000px;margin:auto;display:grid;grid-template-columns:minmax(260px,340px) minmax(280px,1fr);gap:28px;align-items:start}
+.intro{padding:12px 4px}.intro h1{font-size:27px;letter-spacing:-1px;margin:0 0 8px}.intro p{color:#66666e;font-size:14px;line-height:1.7;margin:0 0 18px}.intro .tag{display:inline-block;border-radius:20px;background:#fff;padding:7px 11px;font-size:11px;color:#555;margin:0 5px 7px 0}
+.phone{width:100%;max-width:330px;margin:0 auto;background:#18181b;border:3px solid #55555a;border-radius:47px;padding:9px;box-shadow:0 18px 50px #0002}
+.screen{height:650px;border-radius:36px;overflow:hidden;background:var(--paper);position:relative}
+.status{height:31px;padding:10px 21px 0;display:flex;justify-content:space-between;font-size:11px;font-weight:700;position:relative;z-index:2}
+.island{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:91px;height:25px;background:#050505;border-radius:18px;z-index:3}
+.view{height:calc(100% - 31px);overflow-y:auto;display:flex;flex-direction:column}
+.lock{height:100%;background:linear-gradient(160deg,#b6c5d4,#e4e2e6 52%,#c5c9d0);padding:36px 20px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;color:#fff}
+.lock-date{font-size:15px;text-shadow:0 1px 6px #3333;margin-top:18px}
+.lock-time{font-size:76px;font-weight:250;letter-spacing:-4px;line-height:1.12;text-shadow:0 1px 8px #3332}
+.lock-notice{margin-top:24px;background:#ffffffc9;color:#28282d;border-radius:17px;padding:11px 13px;width:100%;text-align:left;backdrop-filter:blur(12px);font-size:12px;box-shadow:0 3px 12px #0001}
+.lock-notice strong{display:block;font-size:12px;margin-bottom:3px}
+.lock-spacer{flex:1}
+.lock-bottom{width:100%;display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.round-control{width:43px;height:43px;border-radius:50%;background:#17171c66;border:0;color:#fff;font-size:19px}
+.unlock{border:0;background:#ffffffd9;color:#303036;padding:11px 20px;border-radius:22px;font-size:12px;font-weight:650}
+.home{padding:18px 15px 12px;background:linear-gradient(160deg,#e9e9ef,#f6f6fa 48%,#e2e2e9);min-height:100%}
+.widget{border-radius:22px;background:#ffffffc9;padding:14px 15px;margin-bottom:17px}
+.widget-top{font-size:11px;color:#707078}.widget-clock{font-size:34px;font-weight:600;letter-spacing:-1px;margin-top:3px}.widget-bottom{font-size:11px;color:#73737b;margin-top:4px}
+.app-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px 7px}
+.app{border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:10px;color:#24242a;min-width:0;padding:0;cursor:pointer}
+.app-icon{width:49px;height:49px;border-radius:13px;background:#fff;display:grid;place-items:center;font-size:24px;box-shadow:0 2px 5px #00000013;position:relative}
+.app-icon svg{width:29px;height:29px}
+.app-name{white-space:nowrap}
+.dock{display:flex;justify-content:space-around;gap:10px;margin-top:24px;padding:11px 9px;border-radius:24px;background:#ffffffa8;backdrop-filter:blur(18px)}
+.dock .app-icon{width:48px;height:48px}
+.home-indicator{position:absolute;bottom:7px;left:50%;transform:translateX(-50%);width:100px;height:4px;border-radius:8px;background:#222}
+.appview{background:var(--paper);min-height:100%;padding:0 0 26px}
+.nav{height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 16px}
+.nav button{border:0;background:transparent;font-size:25px;color:var(--blue);padding:0 4px}
+.nav .nav-title{font-size:12px;font-weight:650;color:#5c5c64}
+.app-head{padding:8px 17px 14px}
+.app-head h2{font-size:29px;letter-spacing:-1px;margin:0 0 3px}
+.app-head p{margin:0;color:var(--muted);font-size:12px}
+.content{padding:0 14px}
+.group-label{font-size:13px;font-weight:750;margin:18px 3px 8px}
+.card{background:#fff;border-radius:15px;padding:12px 13px;margin-bottom:9px;font-size:13px;line-height:1.45;overflow-wrap:anywhere}
+.small{font-size:11px;color:var(--muted);margin-top:3px}
+.person-row{display:flex;align-items:center;gap:10px}
+.avatar{height:39px;width:39px;border-radius:50%;display:grid;place-items:center;background:#e8e8ed;font-size:19px;flex-shrink:0}
+.chat{padding:12px 0;border-bottom:1px solid #eee}
+.chat:last-child{border-bottom:0}
+.chat-name{font-weight:700;font-size:13px}
+.chat-preview{font-size:12px;color:#777;margin-top:4px}
+.bubble{padding:10px 12px;border-radius:17px;margin:8px 0;max-width:86%;font-size:13px;line-height:1.5;overflow-wrap:anywhere}
+.bubble.in{background:#fff;border-top-left-radius:5px}
+.bubble.out{background:#8fcf78;border-top-right-radius:5px;margin-left:auto}
+.chat-time{font-size:10px;color:#8a8a91;text-align:center;margin:13px 0}
+.chat-compose{display:flex;gap:7px;margin-top:14px}
+.chat-compose input,.field{width:100%;min-width:0;padding:11px;border:1px solid #dddde3;border-radius:12px;background:white;font:inherit;font-size:13px}
+.chat-compose button,.primary{border:0;border-radius:12px;background:var(--blue);color:white;padding:0 13px;font-size:13px}
+.note{background:#fff5c9;border-radius:12px;padding:13px;margin-bottom:9px;font-size:13px;line-height:1.55}
+.note strong{display:block;margin-bottom:5px}
+.note-form{display:grid;gap:8px;margin-top:15px}
+.note-form textarea{resize:vertical;min-height:80px}
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.photo{aspect-ratio:1;border-radius:7px;display:grid;place-items:center;font-size:31px;background:linear-gradient(140deg,#c9cdd7,#eee6e4,#b3c3cc);position:relative;overflow:hidden}
+.photo:nth-child(3n+2){background:linear-gradient(145deg,#c7c0cb,#e4d9c7)}
+.photo:nth-child(3n){background:linear-gradient(145deg,#d8dfe0,#b3bdc9)}
+.photo span{position:absolute;bottom:5px;right:6px;font-size:10px}
+.photo-caption{font-size:11px;color:#777;margin-top:9px}
+.search{border-radius:12px;background:#e4e4e9;padding:10px 12px;font-size:12px;color:#888;margin:0 0 12px}
+.setting-row{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.toggle{border:0;border-radius:20px;background:#34c759;color:white;padding:4px 10px;font-size:11px}
+.bottom-note{font-size:11px;color:#85858d;line-height:1.6;margin:12px 3px}
+.hidden{display:none!important}
+@media(max-width:700px){body{padding:14px 10px 28px}.page{grid-template-columns:1fr;gap:16px}.intro{max-width:360px;margin:auto;padding:0 5px}.intro h1{font-size:22px}.phone{max-width:330px}.screen{height:650px}}
+</style>
+</head>
+<body>
+<div class="page">
+  <section class="intro">
+    <h1>HALPHAS'S iPHONE</h1>
+    <p>잠금이 풀린 할파스의 휴대폰.<br>아이폰 기본 화면을 바탕으로, 앱을 눌러 그의 사적인 기록을 확인해 보세요.</p>
+    <span class="tag">iOS 기본 스타일</span><span class="tag">슈메터링 화학부서</span><span class="tag">가상 데이터</span>
+    <p style="margin-top:13px">※ 이 페이지는 캐릭터 설정을 바탕으로 만든 팬메이드 인터랙티브 목업입니다. 사진과 대화는 분위기를 위한 가상 내용입니다.</p>
+  </section>
+  <div class="phone">
+    <div class="screen">
+      <div class="status"><span>SKT ▴</span><span>▮▮ Wi-Fi ▰</span></div><div class="island"></div>
+      <div class="view" id="lockView">
+        <div class="lock">
+          <div class="lock-date">10월 24일 토요일</div>
+          <div class="lock-time" id="lockTime">18:26</div>
+          <div class="lock-notice"><strong>알림 센터 · 지금</strong>화학부서 · 오늘 연구 일정 확인 바랍니다.<div class="small">화면을 밀어 알림 보기</div></div>
+          <div class="lock-spacer"></div>
+          <div class="lock-bottom"><button class="round-control" aria-label="손전등">▥</button><button class="unlock" id="unlock">위로 밀어 잠금 해제 ↑</button><button class="round-control" aria-label="카메라">◎</button></div>
+        </div>
+      </div>
+      <div class="view hidden" id="homeView">
+        <div class="home">
+          <div class="widget"><div class="widget-top">토요일 · 10월 24일</div><div class="widget-clock" id="widgetTime">18:26</div><div class="widget-bottom">슈메터링 · 화학부서 책임자</div></div>
+          <div class="app-grid">
+            <button class="app" data-app="messages"><span class="app-icon">💬</span><span class="app-name">메시지</span></button>
+            <button class="app" data-app="photos"><span class="app-icon">🌈</span><span class="app-name">사진</span></button>
+            <button class="app" data-app="notes"><span class="app-icon">📝</span><span class="app-name">메모</span></button>
+            <button class="app" data-app="calls"><span class="app-icon">📞</span><span class="app-name">전화</span></button>
+            <button class="app" data-app="contacts"><span class="app-icon">👤</span><span class="app-name">연락처</span></button>
+            <button class="app" data-app="calendar"><span class="app-icon">📅</span><span class="app-name">캘린더</span></button>
+            <button class="app" data-app="music"><span class="app-icon">🎵</span><span class="app-name">음악</span></button>
+            <button class="app" data-app="research"><span class="app-icon">🧪</span><span class="app-name">연구 기록</span></button>
+            <button class="app" data-app="mail"><span class="app-icon">✉️</span><span class="app-name">메일</span></button>
+            <button class="app" data-app="settings"><span class="app-icon">⚙️</span><span class="app-name">설정</span></button>
+            <button class="app" data-app="hidden"><span class="app-icon">🔒</span><span class="app-name">잠긴 메모</span></button>
+            <button class="app" data-app="browser"><span class="app-icon">🧭</span><span class="app-name">Safari</span></button>
+          </div>
+          <div class="dock">
+            <button class="app" data-app="calls"><span class="app-icon">📞</span></button>
+            <button class="app" data-app="messages"><span class="app-icon">💬</span></button>
+            <button class="app" data-app="browser"><span class="app-icon">🧭</span></button>
+            <button class="app" data-app="music"><span class="app-icon">🎵</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="view hidden" id="appView"><div class="appview"><div class="nav"><button id="backBtn" aria-label="뒤로">‹</button><span class="nav-title" id="navTitle">iPhone</span><button id="homeBtn" aria-label="홈">⌂</button></div><div class="app-head"><h2 id="appTitle">메모</h2><p id="appSubtitle"></p></div><div class="content" id="appContent"></div></div></div>
+      <div class="home-indicator"></div>
+    </div>
+  </div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const lockView=$('lockView'),homeView=$('homeView'),appView=$('appView');
+function goHome(){lockView.classList.add('hidden');appView.classList.add('hidden');homeView.classList.remove('hidden')}
+$('unlock').addEventListener('click',goHome);
+$('backBtn').addEventListener('click',goHome);$('homeBtn').addEventListener('click',goHome);
+const store={
+ messages:{title:'메시지',subtitle:'최근 대화',render:()=>`
+  <div class="card"><div class="person-row"><div class="avatar">🧪</div><div><b>슈메터링 · 화학부서</b><div class="small">업무 관련 메시지</div></div></div>
+   <div class="chat"><div class="chat-name">아우구스투스</div><div class="chat-preview">오늘 연구 결과 확인했나?</div></div>
+   <div class="chat"><div class="chat-name">할파스</div><div class="chat-preview">확인했으면 끝난 거잖아. 더 할 말 있나?</div></div>
+   <div class="chat"><div class="chat-name">아우구스투스</div><div class="chat-preview">보고서는 올려 두게.</div></div>
+   <button class="primary" style="padding:10px 12px;margin-top:9px" onclick="openChat('work')">대화 열기</button>
+  </div>
+  <div class="card"><div class="person-row"><div class="avatar">👤</div><div><b>모르는 번호</b><div class="small">읽지 않은 메시지 1개</div><div style="margin-top:5px">전화 좀 받아. 급한 일이야.</div></div></div><button class="primary" style="padding:9px 12px;margin-top:10px" onclick="openChat('unknown')">대화 열기</button></div>
+  <div class="bottom-note">대화는 캐릭터 설정을 바탕으로 구성한 가상 예시입니다.</div>`},
+ photos:{title:'사진',subtitle:'최근 항목 · 18장',render:()=>`<div class="search">⌕　검색</div><div class="photo-grid">${[['🧪','연구실'],['📄','문서'],['☕','책상'],['🌃','야경'],['🐦‍⬛','까마귀'],['🧬','샘플'],['🚬','휴식'],['🗝️','기록'],['🕰️','시계'],['🧫','실험'],['📦','배송'],['⬛','기타']].map(x=>`<div class="photo" title="${x[1]}">${x[0]}<span>${x[1]}</span></div>`).join('')}</div><div class="photo-caption">※ 실제 사진 대신 이모지로 표현한 가상 사진첩</div>`},
+ notes:{title:'메모',subtitle:'최근 메모',render:()=>`<div id="notesList">
+  <div class="note"><strong>12월 25일</strong>생일. 기억할 필요 없음.</div>
+  <div class="note"><strong>연구 일정</strong>09:00 — 샘플 확인<br>13:30 — 실험 결과 검토<br>불필요한 회의는 취소할 것.</div>
+  <div class="note"><strong>기억할 것</strong>왼쪽 주머니: 예비품<br>오른쪽 서랍: 문서<br>날짜와 수치 재확인.</div>
+  <div class="note"><strong>메모</strong>사람들은 말을 너무 많이 한다.</div></div>
+  <div class="note-form"><input class="field" id="noteTitle" placeholder="새 메모 제목"><textarea class="field" id="noteBody" placeholder="내용"></textarea><button class="primary" style="padding:11px" onclick="addNote()">메모 저장</button></div>`},
+ calls:{title:'최근 통화',subtitle:'모든 통화',render:()=>`<div class="card"><div class="person-row"><div class="avatar">🧪</div><div><b>슈메터링 · 내선</b><div class="small">오늘 16:42 · 발신 통화</div></div></div></div><div class="card"><div class="person-row"><div class="avatar">👤</div><div><b>알 수 없는 번호</b><div class="small" style="color:#e44">오늘 15:08 · 부재중</div></div></div></div><div class="card"><div class="person-row"><div class="avatar">👩</div><div><b>가족</b><div class="small">어제 20:17 · 부재중</div></div></div></div><div class="bottom-note">연락처에 저장되지 않은 번호가 여러 번 전화를 걸었습니다.</div>`},
+ contacts:{title:'연락처',subtitle:'전체 연락처',render:()=>`<div class="search">⌕　검색</div>${[['🧪','아우구스투스','슈메터링'],['🏢','슈메터링 내선','업무'],['👩','가족','개인'],['？','알 수 없는 번호','저장되지 않음']].map(x=>`<div class="card"><div class="person-row"><div class="avatar">${x[0]}</div><div><b>${x[1]}</b><div class="small">${x[2]}</div></div></div></div>`).join('')}`},
+ calendar:{title:'캘린더',subtitle:'10월 일정',render:()=>`<div class="card"><b>24일 · 오늘</b><div class="small">09:00 · 화학부서 실험 확인</div><div class="small">13:30 · 연구 결과 검토</div><div class="small">18:00 · 퇴근 예정 (미정)</div></div><div class="card"><b>25일 · 일요일</b><div class="small">개인 일정 없음</div></div><div class="card"><b>28일 · 수요일</b><div class="small">샘플 재검토 · 시간 미정</div></div>`},
+ music:{title:'음악',subtitle:'보관함',render:()=>`<div class="card" style="text-align:center;padding:25px 12px"><div style="font-size:58px">🎵</div><b>최근 재생</b><div class="small">제목 없는 트랙</div><div style="margin-top:20px;font-size:25px">◀　▶　▶</div></div><div class="card"><b>플레이리스트</b><div class="small">집중 · 17곡</div></div><div class="card"><b>플레이리스트</b><div class="small">이름 없음 · 4곡</div></div><div class="bottom-note">음악 취향은 공식 설정에 명시되지 않아 임의의 곡을 지정하지 않았습니다.</div>`},
+ research:{title:'연구 기록',subtitle:'화학부서 · 내부 기록',render:()=>`<div class="card"><div class="small">파일 0048 · 오늘 16:21</div><b>실험 결과 요약</b><p>수치 재검증 필요. 이전 기록과 차이가 발생함. 원인 확인 전까지 결론 보류.</p></div><div class="card"><div class="small">파일 0047 · 어제 22:06</div><b>샘플 보관 목록</b><p>보관 위치와 날짜 대조 완료. 목록 외부 공유 금지.</p></div><div class="card"><div class="small">개인 메모</div><b>기억할 것</b><p>결과가 마음에 들지 않는다고 해서 결과가 바뀌지는 않는다.</p></div><div class="bottom-note">연구 내용은 세계관을 위한 가상의 기록이며 실제 화학 실험 절차를 포함하지 않습니다.</div>`},
+ mail:{title:'메일',subtitle:'받은 편지함',render:()=>`<div class="card"><div class="small">오늘 17:32 · 슈메터링</div><b>주간 보고서 제출 요청</b><p>이번 주 연구 요약을 확인 후 제출해 주십시오.</p></div><div class="card"><div class="small">오늘 11:09 · 시스템</div><b>비밀번호 변경 알림</b><p>계정 보안을 위해 정기 점검이 권장됩니다.</p></div><div class="card"><div class="small">어제 09:15 · 발신자 미상</div><b>확인 요청</b><p>첨부 파일을 열기 전 발신자를 확인하십시오.</p></div>`},
+ hidden:{title:'메모 잠금',subtitle:'보호된 메모',render:()=>`<div class="card" style="text-align:center;padding:24px 15px"><div style="font-size:42px">🔒</div><b>이 메모는 잠겨 있습니다.</b><p class="small">기기에 저장된 개인 메모를 확인하려면 암호를 입력하세요.</p><input class="field" id="secretPass" type="password" placeholder="암호 입력" style="margin-top:12px"><button class="primary" style="padding:11px 16px;margin-top:10px" onclick="unlockSecret()">메모 보기</button><p class="small">힌트: 이 목업의 암호는 1225 입니다.</p></div><div id="secretContent" class="hidden"><div class="note"><strong>개인 기록</strong>귀찮은 것들은 기록해 두면 다시 설명할 필요가 없다.<br><br>쓸데없는 질문을 하는 사람은 차단할 것.<br><br>12월 25일 — 기억해 둘 날짜.</div><div class="bottom-note">※ 이 암호는 연출용이며 실제 보안 기능이 아닙니다.</div></div>`},
+ browser:{title:'Safari',subtitle:'즐겨찾기',render:()=>`<div class="search">⌕　검색 또는 웹사이트 이름</div><div class="card"><b>슈메터링 인트라넷</b><div class="small">내부 네트워크 · 즐겨찾기</div></div><div class="card"><b>연구 자료 아카이브</b><div class="small">최근 방문</div></div><div class="card"><b>검색 기록</b><div class="small">화학 반응 데이터 / 실험 기록 정리 / 날짜 계산</div></div>`},
+ settings:{title:'설정',subtitle:'iPhone 설정',render:()=>`<div class="card"><div class="person-row"><div class="avatar">👤</div><div><b>Halphas</b><div class="small">Apple 계정 · 개인 정보</div></div></div></div>${[['에어플레인 모드','끔'],['Wi-Fi','연결됨'],['Bluetooth','켬'],['알림','켜짐'],['배경화면','기본'],['암호 및 보안','설정됨']].map(x=>`<div class="card setting-row"><span>${x[0]}</span><span class="small">${x[1]}</span></div>`).join('')}`}
+};
+function openApp(key){const app=store[key];if(!app)return;homeView.classList.add('hidden');lockView.classList.add('hidden');appView.classList.remove('hidden');$('navTitle').textContent=app.title;$('appTitle').textContent=app.title;$('appSubtitle').textContent=app.subtitle;$('appContent').innerHTML=app.render();appView.scrollTop=0}
+document.querySelectorAll('[data-app]').forEach(b=>b.addEventListener('click',()=>openApp(b.dataset.app)));
+function addNote(){const title=$('noteTitle').value.trim()||'제목 없음',body=$('noteBody').value.trim();if(!body&&!$('noteTitle').value.trim())return;const n=document.createElement('div');n.className='note';const s=document.createElement('strong');s.textContent=title;const p=document.createElement('div');p.textContent=body;n.append(s,p);$('notesList').prepend(n);$('noteTitle').value='';$('noteBody').value=''}
+function unlockSecret(){if($('secretPass').value==='1225'){$('secretContent').classList.remove('hidden')}else{$('secretPass').value='';$('secretPass').placeholder='암호가 올바르지 않습니다';}}
+function openChat(kind){const appContent=$('appContent');if(kind==='work'){appContent.innerHTML=`<div class="card"><b>아우구스투스</b><div class="small">오늘</div><div class="chat-time">오늘 16:04</div><div class="bubble in">오늘 연구 결과 확인했나?</div><div class="bubble out">확인했으면 끝난 거잖아. 더 할 말 있나?</div><div class="bubble in">보고서는 올려 두게.</div><div class="bubble out">귀찮게 굴지 마. 올릴 테니까.</div><div class="bubble in">말은 그렇게 하면서 늘 제시간에 올리더군.</div><div class="bubble out">쓸데없는 소리.</div></div><div class="chat-compose"><input id="replyText" placeholder="iMessage"><button onclick="sendReply()">↑</button></div>`}else{appContent.innerHTML=`<div class="card"><b>알 수 없는 번호</b><div class="small">오늘</div><div class="bubble in">전화 좀 받아. 급한 일이야.</div><div class="bubble out">누구지.</div><div class="bubble in">연구실에서 있었던 일, 얘기해야겠어.</div><div class="bubble out">용건만 말해.</div></div><div class="chat-compose"><input id="replyText" placeholder="iMessage"><button onclick="sendReply()">↑</button></div>`}}
+function sendReply(){const input=$('replyText');if(!input||!input.value.trim())return;const b=document.createElement('div');b.className='bubble out';b.textContent=input.value.trim();input.closest('.chat-compose').before(b);input.value=''}
+</script>
+</body>
+</html>
